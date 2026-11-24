@@ -1,65 +1,18 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
+export const light = {
+  bg: '#F4F5F7', card: '#FFFFFF', tx: '#1A1D23', mu: '#5F6672', bd: '#E5E7EB', pr: '#2F5FD0',
+  blb: '#E8EEFB', blt: '#2447A8', amb: '#FDF0DC', amt: '#8A5300', grb: '#E3F4EA', grt: '#176B3A',
+  rdb: '#FDE8E8', rdt: '#A31B1B', off: '#E2E4E8', hero1: '#2F5FD0', hero2: '#1E3F96',
+  danger: '#C0262D', amber: '#E8A33D', toast: '#1A1D23', toastTx: '#FFFFFF', outer: '#CFD3DA', frame: '#1A1D23',
+};
+export type Palette = typeof light;
 
-import '@/global.css';
+export const dark: Palette = {
+  bg: '#0F1218', card: '#1A1F29', tx: '#EDEFF3', mu: '#A3ABB8', bd: '#2B3140', pr: '#3A68DB',
+  blb: '#1E2A4A', blt: '#A9C0FF', amb: '#3A2D12', amt: '#F3C77E', grb: '#12301F', grt: '#8FDDAE',
+  rdb: '#3C1A1A', rdt: '#FFA9A9', off: '#2B3140', hero1: '#3A68DB', hero2: '#1E2F6B',
+  danger: '#C0262D', amber: '#E8A33D', toast: '#EDEFF3', toastTx: '#0F1218', outer: '#080A0E', frame: '#2B3140',
+};
 
-import { Platform } from 'react-native';
-
-export const Colors = {
-  light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
-  },
-  dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
-  },
-} as const;
-
-export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
-
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
-  },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: 'var(--font-display)',
-    serif: 'var(--font-serif)',
-    rounded: 'var(--font-rounded)',
-    mono: 'var(--font-mono)',
-  },
-});
-
-export const Spacing = {
-  half: 2,
-  one: 4,
-  two: 8,
-  three: 16,
-  four: 24,
-  five: 32,
-  six: 64,
-} as const;
-
-export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
-export const MaxContentWidth = 800;
+export type Tone = 'bl' | 'am' | 'gr' | 'rd' | 'gy';
+export const toneColors = (p: Palette, t: Tone) =>
+  ({ bl: { bg: p.blb, fg: p.blt }, am: { bg: p.amb, fg: p.amt }, gr: { bg: p.grb, fg: p.grt }, rd: { bg: p.rdb, fg: p.rdt }, gy: { bg: p.off, fg: p.mu } })[t];

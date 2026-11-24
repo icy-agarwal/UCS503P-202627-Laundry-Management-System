@@ -1,40 +1,27 @@
-import { DarkTheme, DefaultTheme, ThemeProvider, Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import React from 'react';
+import { Platform, View } from 'react-native';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Manrope_500Medium, Manrope_700Bold, Manrope_800ExtraBold, useFonts } from '@expo-google-fonts/manrope';
+import { AuthProvider } from '../hooks/useAuth';
+import { useTheme } from '../hooks/useTheme';
+import { ToastProvider } from '../components/ui';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import { SessionProvider, useSession } from '@/context/session';
-
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
+export default function Root() {
+  const th = useTheme();
+  const [loaded, error] = useFonts({ Manrope_500Medium, Manrope_700Bold, Manrope_800ExtraBold });
+  if (!loaded && !error) return <View style={{ flex: 1, backgroundColor: th.bg }} />;
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <SessionProvider>
-        <AnimatedSplashOverlay />
-        <RootNavigator />
-      </SessionProvider>
-    </ThemeProvider>
-  );
-}
-
-// This component is separate from RootLayout because useSession() needs to run
-// INSIDE <SessionProvider>, not alongside it.
-function RootNavigator() {
-  const { isLoggedIn } = useSession();
-
-  if (!isLoggedIn) {
-    return (
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(auth)" />
-      </Stack>
-    );
-  }
-
-  return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(student)" />
-    </Stack>
+    <SafeAreaProvider>
+      <View style={[{ flex: 1, backgroundColor: th.bg }, Platform.OS === 'web' ? ({ height: '100dvh' } as any) : null]}>
+      <AuthProvider>
+        <ToastProvider>
+          <StatusBar style="auto" />
+          <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: th.bg } }} />
+        </ToastProvider>
+      </AuthProvider>
+      </View>
+    </SafeAreaProvider>
   );
 }
