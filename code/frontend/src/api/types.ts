@@ -23,7 +23,7 @@ export interface Config {
 }
 
 export interface Enrollment { semesterId: string; hostelId: string; status: EnrollmentStatus }
-export interface StudentProfile { name: string; gender: 'Boys' | 'Girls'; hostelId: string; room: string; phone: string; admissionYear?: number }
+export interface StudentProfile { name: string; gender: 'Boys' | 'Girls'; hostelId: string; room: string; phone: string; admissionYear?: number; semester?: string }
 export type ProfileInput = StudentProfile;
 
 export interface Me {

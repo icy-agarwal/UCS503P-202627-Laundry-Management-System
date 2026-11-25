@@ -101,7 +101,7 @@ export const supabaseApi: Api = {
     const hostelId = String(p.hostel ?? '');
     return {
       id, role, email, name: p.name ?? '',
-      profile: { name: p.name ?? '', gender: p.gender === 'Girls' ? 'Girls' : 'Boys', hostelId, room: String(p.room ?? ''), phone: String(p.phone ?? ''), admissionYear: Number(p.admissionYear) || undefined },
+      profile: { name: p.name ?? '', gender: p.gender === 'Girls' ? 'Girls' : 'Boys', hostelId, room: String(p.room ?? ''), phone: String(p.phone ?? ''), admissionYear: Number(p.admissionYear) || undefined, semester: p.semester ? String(p.semester) : undefined },
       enrollment: { semesterId: 'current', hostelId, status: 'Active' },
     };
   },
